@@ -1,0 +1,12 @@
+neovim-bin = "/opt/nvim-linux-x86_64/bin/nvim"
+
+[font]
+normal = { family = "Monaspace Neon NF", style = "Regular" }
+bold = { family = "Monaspace Neon NF", style = "Bold" }
+italic = { family = "Monaspace Neon NF", style = "Italic" }
+bold_italic = { family = "Monaspace Neon NF", style = "BoldItalic" }
+size = 13.0
+
+[font.features]
+"Monaspace Neon NF" = ["+calt", "+liga", "+ss01", "+ss02", "+ss03", "+ss04", "+ss05", "+ss06", "+ss07", "+ss08"]
+
