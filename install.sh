@@ -19,11 +19,6 @@ if [ ! -d "$HOME/.oh-my-zsh" ]; then
 fi
 ZSH_CUSTOM="${ZSH_CUSTOM:-$HOME/.oh-my-zsh/custom}"
 
-# --- powerlevel10k ---
-if [ ! -d "$ZSH_CUSTOM/themes/powerlevel10k" ]; then
-  git clone --depth=1 https://github.com/romkatv/powerlevel10k.git "$ZSH_CUSTOM/themes/powerlevel10k"
-fi
-
 # --- zsh plugins ---
 if [ ! -d "$ZSH_CUSTOM/plugins/zsh-autosuggestions" ]; then
   git clone --depth=1 https://github.com/zsh-users/zsh-autosuggestions "$ZSH_CUSTOM/plugins/zsh-autosuggestions"
@@ -34,7 +29,6 @@ fi
 
 # --- symlinks ---
 link "$DOTFILES/zsh/.zshrc" "$HOME/.zshrc"
-link "$DOTFILES/zsh/.p10k.zsh" "$HOME/.p10k.zsh"
 mkdir -p "$HOME/.config"
 link "$DOTFILES/nvim" "$HOME/.config/nvim"
 link "$DOTFILES/neovide" "$HOME/.config/neovide"
