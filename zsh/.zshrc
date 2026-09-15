@@ -136,7 +136,7 @@ b() {
   fi
 
   if [[ "$PWD" == "$S" ]]; then
-    read -q "Currently in \$S root ($S) Are you super duper sure? [y/N] "
+    read -q "REPLY?Currently in \$S root ($S) Are you super duper sure? [y/N] "
     echo
     if [[ "$REPLY" != [Yy] ]]; then
       echo "Build cancelled."
@@ -146,3 +146,59 @@ b() {
   
   smake build
 }
+
+h() {
+  houdini -foreground
+}
+
+hl(){
+ houdini -openrecenthip
+}
+make-patch() {
+        tiny=0
+        if [ "$1" = "-tiny" ]; then
+                tiny=1
+                shift
+        fi
+
+        if [ "$#" -lt 1 ]; then
+                echo "Usage: make-patch [-tiny] <output-file> [changelist]"
+                echo "  -tiny: Use default svn diff output (no -x -U100000)."
+                echo "  <output-file>: Base file name for the patch."
+                echo "  [changelist]: (Optional) The changelist to include in the patch."
+                return 1
+        fi
+
+        timestamp=$(date +"%Y%m%d_%H%M%S")
+
+        base="$1"
+
+        # If filename has an extension, preserve it; otherwise add .patch
+        if [[ "$base" == *.* ]]; then
+                name="${base%.*}"
+                ext=".${base##*.}"
+        else
+                name="$base"
+                ext=".patch"
+        fi
+
+        output="${name}_${timestamp}${ext}"
+
+        if [ -n "$2" ]; then
+                if [ "$tiny" -eq 1 ]; then
+                        svn diff --changelist "$2" > "$output"
+                else
+                        svn diff --changelist "$2" -x -U100000 > "$output"
+                fi
+        else
+                if [ "$tiny" -eq 1 ]; then
+                        svn diff > "$output"
+                else
+                        svn diff -x -U100000 > "$output"
+                fi
+        fi
+
+        echo "Patch written to $output"
+}
+
+eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv zsh)"

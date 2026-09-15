@@ -7,6 +7,28 @@ local map = vim.keymap.set
 map("n", ";", ":", { desc = "CMD enter command mode" })
 map("i", "jk", "<ESC>")
 
+map("n", "<leader>ch", function()
+  local extension = vim.fn.expand "%:e"
+  local alternate_extension
+
+  if extension == "C" then
+    alternate_extension = "h"
+  elseif extension == "h" then
+    alternate_extension = "C"
+  else
+    vim.notify("Current file is not a .C or .h file", vim.log.levels.WARN)
+    return
+  end
+
+  local alternate = vim.fn.expand "%:r" .. "." .. alternate_extension
+  if vim.fn.filereadable(alternate) == 0 then
+    vim.notify("Alternate file not found: " .. alternate, vim.log.levels.WARN)
+    return
+  end
+
+  vim.cmd.edit(vim.fn.fnameescape(alternate))
+end, { desc = "Switch between .C and .h" })
+
 -- map({ "n", "i", "v" }, "<C-s>", "<cmd> w <cr>")
 
 -- Neovide: ctrl+scroll to zoom (adjust font size)
