@@ -14,6 +14,16 @@ return {
   },
 
   {
+    dir = vim.fn.expand "~/nvim-plugins/telescope-svn.nvim",
+    name = "telescope-svn.nvim",
+    dependencies = { "nvim-telescope/telescope.nvim" },
+    event = "VeryLazy",
+    config = function()
+      require("telescope").load_extension "svn"
+    end,
+  },
+
+  {
     "mhinz/vim-signify",
     event = { "BufReadPre", "BufNewFile" },
   },

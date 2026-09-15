@@ -30,7 +30,14 @@ fi
 # --- symlinks ---
 link "$DOTFILES/zsh/.zshrc" "$HOME/.zshrc"
 mkdir -p "$HOME/.config"
-link "$DOTFILES/nvim" "$HOME/.config/nvim"
+if [ -d "$HOME/.config/nvim" ] && [ ! -L "$HOME/.config/nvim" ]; then
+  # Keep an existing Neovim installation and share the files managed here.
+  mkdir -p "$HOME/.config/nvim/lua/plugins"
+  link "$DOTFILES/nvim/lua/mappings.lua" "$HOME/.config/nvim/lua/mappings.lua"
+  link "$DOTFILES/nvim/lua/plugins/init.lua" "$HOME/.config/nvim/lua/plugins/init.lua"
+else
+  link "$DOTFILES/nvim" "$HOME/.config/nvim"
+fi
 link "$DOTFILES/neovide" "$HOME/.config/neovide"
 
 echo "Done. Start a new shell (or 'exec zsh') to pick everything up."

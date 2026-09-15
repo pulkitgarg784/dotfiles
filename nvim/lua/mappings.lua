@@ -7,7 +7,7 @@ local map = vim.keymap.set
 map("n", ";", ":", { desc = "CMD enter command mode" })
 map("i", "jk", "<ESC>")
 
-map("n", "<leader>ch", function()
+map("n", "<leader>ca", function()
   local extension = vim.fn.expand "%:e"
   local alternate_extension
 
@@ -28,6 +28,13 @@ map("n", "<leader>ch", function()
 
   vim.cmd.edit(vim.fn.fnameescape(alternate))
 end, { desc = "Switch between .C and .h" })
+
+map("n", "<leader>sv", function()
+  require("telescope").extensions.svn.status()
+end, { desc = "telescope svn status" })
+
+map("n", "<leader>sd", "<cmd>SignifyHunkDiff<cr>", { desc = "svn hunk diff (gutter)" })
+map("n", "<leader>sr", "<cmd>SignifyHunkUndo<cr>", { desc = "revert changes on hunk" })
 
 -- map({ "n", "i", "v" }, "<C-s>", "<cmd> w <cr>")
 
